@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var i = 0; i < topicTitles.length; i++) {
             var duration = parseInt(topicDurations[i].value, 10) * 60;
             topics.push({ title: topicTitles[i].value, duration: duration });
-            topicDurations[i].style.display = 'none';
         }
 
         currentTopicIndex = 0;
@@ -40,14 +39,17 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentTopicIndex < topics.length) {
             var currentTopic = topics[currentTopicIndex];
             var timeLeft = currentTopic.duration;
-            var timerDisplay = document.getElementById('timerDisplay');
             var currentInputBox = document.querySelector('.topicInput[data-topic-index="' + currentTopicIndex + '"]');
-
             if (currentInputBox) {
                 currentInputBox.classList.add('activeTopic');
             }
 
             var timerInterval = setInterval(function () {
+                var minutes = Math.floor(timeLeft / 60);
+                var seconds = timeLeft % 60;
+                var timeString = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+                document.getElementById('timerDisplay').textContent = timeString;
+
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     bellSound.play();
@@ -55,17 +57,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         currentInputBox.classList.remove('activeTopic');
                     }
                     currentTopicIndex++;
-                    startNextTopic();
+                    if (currentTopicIndex < topics.length) {
+                        startNextTopic();
+                    } else {
+                        document.getElementById('timerDisplay').textContent = 'Meeting Over';
+                    }
                 } else {
-                    var minutes = Math.floor(timeLeft / 60);
-                    var seconds = timeLeft % 60;
-                    var timeString = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
-                    timerDisplay.textContent = timeString;
                     timeLeft--;
                 }
             }, 1000);
-        } else {
-            document.getElementById('timerDisplay').textContent = 'Meeting Over';
         }
     }
 
@@ -80,10 +80,11 @@ document.addEventListener('DOMContentLoaded', function () {
             var iframe = document.getElementById('jitsi-meet');
             iframe.src = 'https://meet.jit.si/' + encodeURIComponent(roomName);
             iframe.style.display = 'block';
-            roomForm.style.display = 'none';
+            roomForm.style.display = 'none'; // Optionally hide the form
         }
     });
 
+    // Event listener for Enter keypress on the room name input
     roomNameInput.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             e.preventDefault(); // Prevent the default form action
