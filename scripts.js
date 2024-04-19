@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Event listener for Enter keypress on the room name input
-    roomNameInput.addEventListener('keypress', function (e) {
+    // Event listener for the Enter keypress on the room name input
+    roomNameInput.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
             e.preventDefault(); // Prevent the default form action
             roomForm.dispatchEvent(new Event('submit')); // Programmatically trigger the form submission
