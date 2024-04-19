@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+#video-meeting {
+    flex: 1;
+    height: 100%;
+}
+
+#palooka-app {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#topicsForm {
+    margin-bottom: 20px;
+}
+
+.topicInput {
+    background-color: red;
+    color: white;
+    padding: 5px;
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.topicInput input {
+    color: white;
+    background: transparent;
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    padding: 5px;
+    border: 1px solid white;
+}
+
+.topicInput input[name="topicDuration[]"] {
+    width: 60px;
+}
+
+.activeTopic, .activeTopic input {
+    background-color: yellow;
+    color: black;
+}
+
+#addTopic {
+    margin-right: 5px;
+}
