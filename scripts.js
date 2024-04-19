@@ -68,27 +68,4 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 1000);
         }
     }
-
-    // Room creation form handler
-    var roomForm = document.getElementById('roomForm');
-    var roomNameInput = document.getElementById('roomName');
-
-    roomForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var roomName = roomNameInput.value.trim();
-        if (roomName) {
-            var iframe = document.getElementById('jitsi-meet');
-            iframe.src = 'https://meet.jit.si/' + encodeURIComponent(roomName);
-            iframe.style.display = 'block';
-            roomForm.style.display = 'none'; // Optionally hide the form
-        }
-    });
-
-    // Event listener for the Enter keypress on the room name input
-    roomNameInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault(); // Prevent the default form action
-            roomForm.dispatchEvent(new Event('submit')); // Programmatically trigger the form submission
-        }
-    });
 });
