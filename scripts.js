@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     bellSound.play();
                     currentInputBox.classList.remove('activeTopic');
                     currentTopicIndex++;
-                    startNextTopic();
+                    startNext Topic();
                 } else {
                     timeLeft--;
                 }
@@ -71,4 +71,15 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('timerDisplay').textContent = "Meeting Over";
         }
     }
+
+    // Room creation form handler
+    document.getElementById('roomForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var roomName = document.getElementById('roomName').value.trim();
+        if (roomName) {
+            var iframe = document.getElementById('jitsi-meet');
+            iframe.src = 'https://meet.jit.si/' + encodeURIComponent(roomName);
+            iframe.style.display = 'block';
+        }
+    });
 });
