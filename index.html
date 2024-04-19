@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palooka and Video Meeting</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="video-meeting">
+            <iframe id="jitsi-meet" src="https://meet.jit.si/YourCustomRoomName" allow="camera; microphone; fullscreen; display-capture" style="height: 100%; width: 100%; border: none;"></iframe>
+        </div>
+        <div id="palooka-app">
+            <div id="timerDisplay">00:00</div>
+            <form id="topicsForm">
+                <div id="topicInputs">
+                    <div class="topicInput" data-topic-index="0">
+                        <input name="topicTitle[]" required type="text" placeholder="Topic Title" />
+                        <input max="240" min="1" name="topicDuration[]" required type="number" placeholder="🕒" />
+                    </div>
+                </div>
+                <button id="addTopic" type="button">Add Topic</button>
+                <button type="submit">Start Talking</button>
+            </form>
+            <ol id="topicList"></ol>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
