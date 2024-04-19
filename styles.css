@@ -16,7 +16,7 @@
     overflow-y: auto;
 }
 
-#topicsForm {
+#topicsForm, #roomForm {
     margin-bottom: 20px;
 }
 
@@ -30,7 +30,7 @@
     display: block;
 }
 
-.topicInput input {
+.topicInput input, #roomName {
     color: white;
     background: transparent;
     font-family: 'Anton', sans-serif;
@@ -39,7 +39,7 @@
     border: 1px solid white;
 }
 
-.topicInput input[name="topicDuration[]"] {
+.topicInput input[name="topicDuration[]"], #roomName {
     width: 60px;
 }
 
