@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var topicTitles = document.querySelectorAll('input[name="topicTitle[]"]');
         var topicDurations = document.querySelectorAll('input[name="topicDuration[]"]');
 
-        topicDurations.forEach(function(input) {
+        topicDurations.forEach(function (input) {
             input.style.display = 'none';
         });
 
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 currentInputBox.classList.add('activeTopic');
             }
 
-            var timerInterval = setInterval(function() {
+            var timerInterval = setInterval(function () {
                 var minutes = Math.floor(timeLeft / 60);
                 var seconds = timeLeft % 60;
 
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     bellSound.play();
                     currentInputBox.classList.remove('activeTopic');
                     currentTopicIndex++;
-                    startNext Topic();
+                    startNextTopic();
                 } else {
                     timeLeft--;
                 }
@@ -73,13 +73,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Room creation form handler
-    document.getElementById('roomForm').addEventListener('submit', function(e) {
+    var roomForm = document.getElementById('roomForm');
+    var roomNameInput = document.getElementById('roomName');
+
+    roomForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        var roomName = document.getElementById('roomName').value.trim();
+        var roomName = roomNameInput.value.trim();
         if (roomName) {
             var iframe = document.getElementById('jitsi-meet');
             iframe.src = 'https://meet.jit.si/' + encodeURIComponent(roomName);
             iframe.style.display = 'block';
+            roomForm.style.display = 'none'; // Optionally hide the form
+        }
+    });
+
+    // Event listener for Enter keypress on the room name input
+    roomNameInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent the default form submission
+            roomForm.dispatchEvent(new Event('submit')); // Programmatically trigger the form submission
         }
     });
 });
