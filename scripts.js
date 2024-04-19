@@ -61,7 +61,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         currentInputBox.classList.remove('activeTopic');
                     }
                     currentTopicIndex++;
-                    startNextTopic();
+                    if (currentTopicIndex < topics.length) {
+                        startNextTopic(); // Recursive call
+                    } else {
+                        document.getElementById('timerDisplay').textContent = "Meeting Over";
+                    }
                 } else {
                     timeLeft--;
                 }
@@ -86,3 +90,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
