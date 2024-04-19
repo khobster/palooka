@@ -3,15 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var currentTopicIndex = 0;
     var bellSound = new Audio('https://www.vanillafrosting.agency/wp-content/uploads/2023/11/bell.mp3');
 
-    // Function to add new topic input fields
     function addTopicInput() {
         var container = document.getElementById('topicInputs');
         var index = container.children.length;
-        var inputHTML = `
-            <div class="topicInput" data-topic-index="${index}">
-                <input type="text" name="topicTitle[]" placeholder="Topic Title" required />
-                <input type="number" name="topicDuration[]" placeholder="🕒" min="1" max="240" required />
-            </div>`;
+        // Corrected the template literals to string concatenation.
+        var inputHTML = '<div class="topicInput" data-topic-index="' + index + '">' +
+                            '<input type="text" name="topicTitle[]" placeholder="Topic Title" required />' +
+                            '<input type="number" name="topicDuration[]" placeholder="🕒" min="1" max="240" required />' +
+                        '</div>';
         container.insertAdjacentHTML('beforeend', inputHTML);
     }
 
@@ -22,10 +21,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var topicTitles = document.querySelectorAll('input[name="topicTitle[]"]');
         var topicDurations = document.querySelectorAll('input[name="topicDuration[]"]');
 
-        topics = [];
+        topics.length = 0; // Clear existing topics
         topicTitles.forEach(function (titleInput, index) {
             var duration = parseInt(topicDurations[index].value, 10) * 60;
             topics.push({ title: titleInput.value, duration: duration });
+            topicDurations[index].style.display = 'none'; // Hide the duration input
         });
 
         currentTopicIndex = 0;
@@ -41,23 +41,25 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentTopicIndex < topics.length) {
             var currentTopic = topics[currentTopicIndex];
             var timeLeft = currentTopic.duration;
-
-            var currentInputBox = document.querySelector(`.topicInput[data-topic-index="${currentTopicIndex}"]`);
+            // Corrected the template literals to string concatenation.
+            var currentInputBox = document.querySelector('.topicInput[data-topic-index="' + currentTopicIndex + '"]');
             if (currentInputBox) {
                 currentInputBox.classList.add('activeTopic');
             }
 
-            var timerInterval = setInterval(function() {
+            var timerInterval = setInterval(function () {
                 var minutes = Math.floor(timeLeft / 60);
                 var seconds = timeLeft % 60;
-
-                var timeString = minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+                // Corrected the template literals to string concatenation.
+                var timeString = (minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
                 document.getElementById('timerDisplay').textContent = timeString;
 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     bellSound.play();
-                    currentInputBox.classList.remove('activeTopic');
+                    if (currentInputBox) {
+                        currentInputBox.classList.remove('activeTopic');
+                    }
                     currentTopicIndex++;
                     startNextTopic();
                 } else {
@@ -77,8 +79,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (roomName) {
             var iframe = document.getElementById('jitsi-meet');
             iframe.src = 'https://meet.jit.si/' + encodeURIComponent(roomName);
-            iframe.style.display = 'block'; // Show the iframe
+            iframe.style.display = 'block';
+            roomForm.style.display = 'none';
+        } else {
+            alert('Please enter a room name.'); // Alert the user to enter a room name
         }
     });
 });
-
