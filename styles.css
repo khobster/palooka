@@ -31,7 +31,7 @@
 }
 
 .topicInput input, #roomName {
-    color: white;
+    color: black;
     background: transparent;
     font-family: 'Anton', sans-serif;
     font-size: 30px;
