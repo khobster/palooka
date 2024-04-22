@@ -46,7 +46,7 @@
 }
 
 .activeTopic, .activeTopic input {
-    background-color: yellow;
+    background-color: pink;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; /* Add black stroke outline */
     color: black;
 }
