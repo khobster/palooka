@@ -30,8 +30,9 @@
     display: block;
 }
 
-.topicInput input {
-    color: black;
+.topicInput input[type="text"],
+.topicInput input[type="number"] {
+    color: white; /* Set the font color to white */
     background: transparent;
     font-family: 'Anton', sans-serif;
     font-size: 30px;
