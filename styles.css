@@ -22,7 +22,7 @@
 
 .topicInput {
     background-color: blue;
-    color: white;
+    color: white; /* Set the font color to white */
     padding: 5px;
     font-family: 'Anton', sans-serif;
     font-size: 30px;
@@ -30,7 +30,7 @@
     display: block;
 }
 
-.topicInput input, #roomName {
+.topicInput input {
     color: black;
     background: transparent;
     font-family: 'Anton', sans-serif;
