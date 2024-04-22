@@ -21,7 +21,7 @@
 }
 
 .topicInput {
-    background-color: red;
+    background-color: green;
     color: white;
     padding: 5px;
     font-family: 'Anton', sans-serif;
@@ -40,7 +40,7 @@
 }
 
 .topicInput input[name="topicDuration[]"], #roomName {
-    width: 60px;
+    width: 300px;
 }
 
 .activeTopic, .activeTopic input {
