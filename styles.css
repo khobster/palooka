@@ -40,7 +40,8 @@
     border: 1px solid white;
 }
 
-.topicInput input[name="topicDuration[]"], #roomName {
+.topicInput input[name="topicDuration[]"], 
+.topicInput #roomName { /* Adjusted selector */
     width: 300px;
 }
 
