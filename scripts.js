@@ -22,9 +22,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         topics.length = 0; // Clear existing topics
         topicTitles.forEach(function (titleInput, index) {
-            var duration = parseInt(topicDurations[index].value, 10) * 60;
+            var durationInput = topicDurations[index];
+            var duration = parseInt(durationInput.value, 10) * 60;
             topics.push({ title: titleInput.value, duration: duration });
-            topicDurations[index].style.display = 'none'; // Hide the duration input
+            titleInput.style.display = 'none'; // Hide the title input
+            durationInput.style.display = 'none'; // Hide the duration input
         });
 
         currentTopicIndex = 0;
@@ -32,11 +34,63 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function startNextTopic() {
-        // ... (existing logic for handling topics)
+        var previousActive = document.querySelector('.topicInput.activeTopic');
+        if (previousActive) {
+            previousActive.classList.remove('activeTopic');
+        }
+
+        if (currentTopicIndex < topics.length) {
+            var currentTopic = topics[currentTopicIndex];
+            var timeLeft = currentTopic.duration;
+            var currentInputBox = document.querySelector('.topicInput[data-topic-index="' + currentTopicIndex + '"]');
+            if (currentInputBox) {
+                currentInputBox.classList.add('activeTopic');
+            }
+
+            var timerInterval = setInterval(function () {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    bellSound.play();
+                    if (currentInputBox) {
+                        currentInputBox.classList.remove('activeTopic');
+                    }
+                    currentTopicIndex++;
+                    startNextTopic();
+                } else {
+                    timeLeft--;
+                    var minutes = Math.floor(timeLeft / 60);
+                    var seconds = timeLeft % 60;
+                    var timeString = (minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+                    document.getElementById('timerDisplay').textContent = timeString;
+                }
+            }, 1000);
+        } else {
+            document.getElementById('timerDisplay').textContent = "Meeting Over";
+        }
     }
 
     function initializeJitsi(roomName) {
-        // ... (existing logic for initializing Jitsi Meet)
+        var domain = 'meet.jit.si'; // Use your Jitsi server if self-hosted
+        var options = {
+            roomName: encodeURIComponent(roomName),
+            parentNode: document.getElementById('jitsi-meet'),
+            width: '100%',
+            height: '100%',
+            configOverwrite: {
+                requireDisplayName: false,
+                startWithAudioMuted: false,
+                prejoinPageEnabled: false
+            },
+            interfaceConfigOverwrite: {
+                filmStripOnly: false,
+                SHOW_JITSI_WATERMARK: false,
+            }
+        };
+
+        new JitsiMeetExternalAPI(domain, options);
+        document.getElementById('jitsi-meet').style.display = 'block';
+        document.getElementById('roomForm').style.display = 'none';
+        document.getElementById('shareSession').style.display = 'inline-block';
     }
 
     var roomForm = document.getElementById('roomForm');
