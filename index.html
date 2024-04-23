@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palooka</title>
+    <title>palooka</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://meet.jit.si/external_api.js"></script> <!-- Jitsi Meet API -->
 </head>
 <body>
     <div class="container">
@@ -15,7 +16,7 @@
                 <button type="submit">Join/Create Room</button>
             </form>
             <!-- Jitsi Meet iframe, initially hidden -->
-            <iframe id="jitsi-meet" style="height: 90%; width: 100%; border: none; display: none;"></iframe>
+            <div id="jitsi-meet" style="height: 90%; width: 100%; display: none;"></div>
         </div>
         <div id="palooka-app">
             <div id="timerDisplay">00:00</div>
