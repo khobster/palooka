@@ -78,13 +78,25 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         var roomName = document.getElementById('roomName').value.trim();
         if (roomName) {
-            var jitsiMeetURL = 'https://meet.jit.si/' + encodeURIComponent(roomName);
-            // Append parameters to the URL as needed (config, jwt, userInfo)
-            // Example: jitsiMeetURL += '#config={configOptions}&jwt=YOUR_JWT_TOKEN&userInfo={userInfo}';
+            var domain = 'meet.jit.si'; // Use your Jitsi server if self-hosted
+            var options = {
+                roomName: encodeURIComponent(roomName),
+                parentNode: document.getElementById('jitsi-meet'),
+                width: '100%',
+                height: '100%',
+                configOverwrite: {
+                    requireDisplayName: false,
+                    startWithAudioMuted: false,
+                    prejoinPageEnabled: false
+                },
+                interfaceConfigOverwrite: {
+                    filmStripOnly: false,
+                    SHOW_JITSI_WATERMARK: false,
+                }
+            };
             
-            var iframe = document.getElementById('jitsi-meet');
-            iframe.src = jitsiMeetURL;
-            iframe.style.display = 'block';
+            new JitsiMeetExternalAPI(domain, options);
+            document.getElementById('jitsi-meet').style.display = 'block';
             roomForm.style.display = 'none';
         } else {
             alert('Please enter a room name.'); // Alert the user to enter a room name
