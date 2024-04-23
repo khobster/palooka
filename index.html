@@ -24,15 +24,14 @@
             <div id="timerDisplay">00:00</div>
             <form id="topicsForm">
                 <div id="topicInputs">
-                    <div class="topicInput" data-topic-index="0">
-                        <input name="topicTitle[]" required type="text" placeholder="Topic Title" />
-                        <input max="240" min="1" name="topicDuration[]" required type="number" placeholder="🕒" />
-                    </div>
+                    <!-- Topic inputs will be dynamically added here -->
                 </div>
                 <button id="addTopic" type="button">Add Topic</button>
                 <button type="submit">Start Talking</button>
             </form>
-            <ol id="topicList"></ol>
+            <ol id="topicList" class="topic-list">
+                <!-- Topics will be displayed here -->
+            </ol>
         </div>
     </div>
     <script src="scripts.js"></script>
