@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var currentTopicIndex = 0;
     var bellSound = new Audio('https://www.vanillafrosting.agency/wp-content/uploads/2023/11/bell.mp3');
 
+    // Adds new topic inputs to the DOM
     function addTopicInput() {
         var container = document.getElementById('topicInputs');
         var index = container.children.length;
@@ -13,26 +14,43 @@ document.addEventListener('DOMContentLoaded', function () {
         container.insertAdjacentHTML('beforeend', inputHTML);
     }
 
+    // Listener for the 'Add Topic' button
     document.getElementById('addTopic').addEventListener('click', addTopicInput);
 
+    // Handles the submission of topics and starts the timer
     document.getElementById('topicsForm').addEventListener('submit', function (e) {
         e.preventDefault();
         var topicTitles = document.querySelectorAll('input[name="topicTitle[]"]');
         var topicDurations = document.querySelectorAll('input[name="topicDuration[]"]');
+        var topicList = document.getElementById('topicList');
 
         topics.length = 0; // Clear existing topics
+        topicList.innerHTML = ''; // Clear the topic list
+
+        // Process each topic and display it
         topicTitles.forEach(function (titleInput, index) {
             var durationInput = topicDurations[index];
-            var duration = parseInt(durationInput.value, 10) * 60;
+            var duration = parseInt(durationInput.value, 10) * 60; // Convert duration to seconds
             topics.push({ title: titleInput.value, duration: duration });
-            titleInput.style.display = 'none'; // Hide the title input
-            durationInput.style.display = 'none'; // Hide the duration input
+
+            // Add topics to the list
+            var listItem = document.createElement('li');
+            listItem.textContent = titleInput.value + ' (' + durationInput.value + ' mins)';
+            topicList.appendChild(listItem);
+
+            // Hide the inputs for duration
+            durationInput.style.display = 'none';
         });
+
+        // Hide the title inputs and 'Add Topic' button after starting the timer
+        document.getElementById('topicInputs').style.display = 'none';
+        document.getElementById('addTopic').style.display = 'none';
 
         currentTopicIndex = 0;
         startNextTopic();
     });
 
+    // Starts the timer for the current topic
     function startNextTopic() {
         var previousActive = document.querySelector('.topicInput.activeTopic');
         if (previousActive) {
@@ -55,22 +73,23 @@ document.addEventListener('DOMContentLoaded', function () {
                         currentInputBox.classList.remove('activeTopic');
                     }
                     currentTopicIndex++;
-                    startNextTopic();
+                    startNextTopic(); // Start the next topic timer
                 } else {
                     timeLeft--;
                     var minutes = Math.floor(timeLeft / 60);
                     var seconds = timeLeft % 60;
                     var timeString = (minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-                    document.getElementById('timerDisplay').textContent = timeString;
+                    document.getElementById('timerDisplay').textContent = timeString; // Update the timer display
                 }
             }, 1000);
         } else {
-            document.getElementById('timerDisplay').textContent = "Meeting Over";
+            document.getElementById('timerDisplay').textContent = "Meeting Over"; // Display when the meeting is over
         }
     }
 
+    // Initialize Jitsi Meet with the provided room name
     function initializeJitsi(roomName) {
-        var domain = 'meet.jit.si'; // Use your Jitsi server if self-hosted
+        var domain = 'meet.jit.si'; // Jitsi server domain
         var options = {
             roomName: encodeURIComponent(roomName),
             parentNode: document.getElementById('jitsi-meet'),
@@ -87,12 +106,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         };
 
+        // Start Jitsi Meet API with the options
         new JitsiMeetExternalAPI(domain, options);
-        document.getElementById('jitsi-meet').style.display = 'block';
-        document.getElementById('roomForm').style.display = 'none';
-        document.getElementById('shareSession').style.display = 'inline-block';
+        document.getElementById('jitsi-meet').style.display = 'block'; // Show the Jitsi iframe
+        document.getElementById('roomForm').style.display = 'none'; // Hide the room form
+        document.getElementById('shareSession').style.display = 'inline-block'; // Show the 'Share Session' button
     }
 
+    // Listener for room creation form submission
     var roomForm = document.getElementById('roomForm');
     roomForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -100,14 +121,16 @@ document.addEventListener('DOMContentLoaded', function () {
         if (roomName) {
             initializeJitsi(roomName);
         } else {
-            alert('Please enter a room name.');
+            alert('Please enter a room name.'); // Alert for room name
         }
     });
 
+    // Event listener for 'Share Session' button click
     document.getElementById('shareSession').addEventListener('click', function() {
         var roomName = document.getElementById('roomName').value.trim();
         var shareURL = window.location.href.split('?')[0] + '?room=' + encodeURIComponent(roomName);
         
+        // Copy the session link to the clipboard
         navigator.clipboard.writeText(shareURL).then(function() {
             alert('Link copied to clipboard! Share it with others to join your Palooka session.');
         }).catch(function(err) {
@@ -115,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Check for the room name in the URL and join the room if present
     var urlParams = new URLSearchParams(window.location.search);
     var roomNameFromURL = urlParams.get('room');
     if(roomNameFromURL) {
