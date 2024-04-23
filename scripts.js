@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function addTopicInput() {
         var container = document.getElementById('topicInputs');
         var index = container.children.length;
-        // Corrected the template literals to string concatenation.
         var inputHTML = '<div class="topicInput" data-topic-index="' + index + '">' +
                             '<input type="text" name="topicTitle[]" placeholder="Topic Title" required />' +
                             '<input type="number" name="topicDuration[]" placeholder="🕒" min="1" max="240" required />' +
@@ -41,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentTopicIndex < topics.length) {
             var currentTopic = topics[currentTopicIndex];
             var timeLeft = currentTopic.duration;
-            // Corrected the template literals to string concatenation.
             var currentInputBox = document.querySelector('.topicInput[data-topic-index="' + currentTopicIndex + '"]');
             if (currentInputBox) {
                 currentInputBox.classList.add('activeTopic');
@@ -50,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var timerInterval = setInterval(function () {
                 var minutes = Math.floor(timeLeft / 60);
                 var seconds = timeLeft % 60;
-                // Corrected the template literals to string concatenation.
                 var timeString = (minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
                 document.getElementById('timerDisplay').textContent = timeString;
 
@@ -81,8 +78,12 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         var roomName = document.getElementById('roomName').value.trim();
         if (roomName) {
+            var jitsiMeetURL = 'https://meet.jit.si/' + encodeURIComponent(roomName);
+            // Append parameters to the URL as needed (config, jwt, userInfo)
+            // Example: jitsiMeetURL += '#config={configOptions}&jwt=YOUR_JWT_TOKEN&userInfo={userInfo}';
+            
             var iframe = document.getElementById('jitsi-meet');
-            iframe.src = 'https://meet.jit.si/' + encodeURIComponent(roomName);
+            iframe.src = jitsiMeetURL;
             iframe.style.display = 'block';
             roomForm.style.display = 'none';
         } else {
@@ -90,4 +91,3 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
