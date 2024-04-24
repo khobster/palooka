@@ -1,3 +1,5 @@
+import { CLIENT_ID, CLIENT_SECRET } from './config.js'; // Import client ID and client secret
+
 document.addEventListener('DOMContentLoaded', function () {
     var topics = [];
     var currentTopicIndex = 0;
