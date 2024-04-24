@@ -7,37 +7,27 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Zoom Web SDK Libraries -->
     <script src="https://source.zoom.us/zoom-meeting-3.6.0.min.js"></script>
-    <!-- Add other dependencies as needed -->
 </head>
 <body>
     <div class="container">
         <div id="video-meeting">
             <!-- Zoom Meeting SDK Component View will be rendered here -->
             <div id="meetingSDKElement"></div>
-            <!-- Button to Join Zoom Meeting -->
-            <button id="startZoomMeeting" onClick="getSignature()">Start Zoom Meeting</button>
+            <form id="zoomMeetingForm">
+                <input type="text" id="meetingNumber" placeholder="Enter Meeting Number" required>
+                <input type="password" id="meetingPassword" placeholder="Enter Meeting Password">
+                <input type="text" id="userName" placeholder="Enter Your Name" required>
+                <input type="email" id="userEmail" placeholder="Enter Your Email">
+                <button type="button" onclick="getSignature()">Join Meeting</button>
+            </form>
         </div>
         <div id="palooka-app">
-            <!-- Palooka App's Timer and Topics will go here -->
+            <!-- Additional features of your Palooka app go here -->
             <div id="timerDisplay">00:00</div>
-            <!-- Add the rest of your Palooka app's HTML structure here -->
+            <!-- Include any other elements of your Palooka app as needed -->
         </div>
     </div>
-    
-    <!-- Palooka App Scripts -->
+
     <script src="scripts.js"></script>
-    
-    <!-- Zoom Web SDK Initialization Script -->
-    <script type="text/javascript">
-        // Your Zoom SDK code goes here
-        
-        const client = ZoomMtgEmbedded.createClient();
-        let meetingSDKElement = document.getElementById('meetingSDKElement');
-        
-        // Other variables like authEndpoint, sdkKey, etc. will be initialized here
-        // And your functions like getSignature and startMeeting
-        
-        // Remember to secure your credentials and tokens
-    </script>
 </body>
 </html>
