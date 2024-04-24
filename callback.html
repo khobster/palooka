@@ -16,9 +16,9 @@
             console.error('Authorization code not found in URL.');
             // Handle error: Authorization code not found
         } else {
-            // Send authorization code to your server for token exchange
-            const tokenExchangeEndpoint = 'https://your-server.com/token-exchange';
-            fetch(tokenExchangeEndpoint, {
+            // Send authorization code to your Lambda function for token exchange
+            const lambdaEndpoint = 'https://your-api-gateway-endpoint';
+            fetch(lambdaEndpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,7 +29,7 @@
             .then(data => {
                 // Handle the server's response
                 console.log('Token exchange response:', data);
-                // For example, store tokens, redirect user, etc.
+                // Store the tokens securely, update UI, etc.
             })
             .catch(error => {
                 console.error('Error exchanging authorization code:', error);
