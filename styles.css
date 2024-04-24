@@ -2,26 +2,29 @@
 
 .container {
     display: flex;
+    flex-direction: column;
     height: 100vh;
 }
 
 #video-meeting {
-    flex: 1;
-    height: 100%;
+    width: 100%;
+    height: 50%;
 }
 
 #palooka-app {
-    flex: 1;
+    width: 100%;
+    height: 50%;
     padding: 20px;
     overflow-y: auto;
 }
 
-#topicsForm, #roomForm {
+#topicsForm {
     margin-bottom: 20px;
 }
 
 .topicInput {
-    background-color: green;
+    background-color: red;
+    color: white;
     padding: 5px;
     font-family: 'Anton', sans-serif;
     font-size: 30px;
@@ -30,7 +33,6 @@
 
 .topicInput input[type="text"],
 .topicInput input[type="number"] {
-    width: 300px;
     color: white;
     background: transparent;
     border: 1px solid white;
@@ -39,19 +41,26 @@
     padding: 5px;
 }
 
+.topicInput input[name="topicDuration[]"] {
+    width: 60px;
+}
+
 .activeTopic {
     background-color: yellow;
-    font-family: 'Anton', sans-serif;
-    font-size: 30px;
-    text-align: center;
+    color: black;
 }
 
 #addTopic {
     margin-right: 5px;
 }
 
-#timerDisplay[data-time]::after {
-    content: attr(data-time);
-    display: block;
-    font-size: 0.8em;
+#timerDisplay {
+    font-family: 'Anton', sans-serif;
+    font-size: 48px; /* Larger font size for the timer display */
+    text-align: center;
+}
+
+#shareSession {
+    display: none; /* Button is hidden initially */
+    margin-top: 20px;
 }
