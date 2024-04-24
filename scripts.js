@@ -69,21 +69,31 @@ document.addEventListener('DOMContentLoaded', function () {
     var zoomForm = document.getElementById('zoomForm');
     zoomForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        var apiKey = document.getElementById('apiKey').value.trim();
-        var apiSecret = document.getElementById('apiSecret').value.trim();
-        var meetingId = document.getElementById('meetingId').value.trim();
-        var accessToken = document.getElementById('accessToken').value.trim();
+        var meetingId = generateMeetingId(); // Generate a unique meeting ID for the Palooka app
+        var accessToken = generateAccessToken(); // Generate an access token for Zoom API
 
-        if (apiKey && apiSecret && meetingId && accessToken) {
-            initializeZoom(apiKey, apiSecret, meetingId, accessToken);
+        if (meetingId && accessToken) {
+            initializeZoom(meetingId, accessToken);
         } else {
-            alert('Please fill in all Zoom API credentials.');
+            alert('Failed to generate meeting ID or access token.');
         }
     });
 
-    function initializeZoom(apiKey, apiSecret, meetingId, accessToken) {
-        // Initialize Zoom meeting using provided credentials
-        // Use Zoom Web SDK functions to start the meeting
+    function initializeZoom(meetingId, accessToken) {
+        // Use Zoom API to start a meeting using the provided meeting ID and access token
         // Display Zoom meeting interface within the 'zoom-meeting' div
+    }
+
+    function generateMeetingId() {
+        // Generate a unique meeting ID for the Palooka app
+        // You can use any method to generate a unique ID, such as UUID
+        return 'PALOOKA_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    function generateAccessToken() {
+        // Generate an access token for Zoom API
+        // You can implement your own method to generate the access token
+        // This token will be used to authenticate Zoom API requests
+        return 'LDrrd8BYQnKvEBnJ1gSQkg';
     }
 });
