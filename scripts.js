@@ -5,6 +5,67 @@ document.addEventListener('DOMContentLoaded', function () {
     var currentTopicIndex = 0;
     var bellSound = new Audio('https://www.vanillafrosting.agency/wp-content/uploads/2023/11/bell.mp3');
 
+    // Zoom SDK Client
+    const client = ZoomMtgEmbedded.createClient();
+    let meetingSDKElement = document.getElementById('meetingSDKElement');
+
+    // Configuration for Zoom Meeting
+    var authEndpoint = 'https://pggibbhorojif6jzsokz32dqlq0kmlmk.lambda-url.us-east-2.on.aws/';
+    var sdkKey = 'Your_SDK_Key';  // Replace 'Your_SDK_Key' with your actual Zoom SDK key
+    var meetingNumber = 'Your_Meeting_Number';  // Replace with actual meeting number
+    var passWord = 'Your_Meeting_Password';  // Optional: Meeting password
+    var role = 0; // 0 for participant, 1 for host
+    var userName = 'Participant Name';
+    var userEmail = 'Participant Email';
+    var registrantToken = '';
+    var zakToken = '';
+
+    // Function to fetch signature and start meeting
+    function getSignature() {
+        fetch(authEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                meetingNumber: meetingNumber,
+                role: role
+            })
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data);
+            startMeeting(data.signature);
+        }).catch(error => {
+            console.error('Error getting signature:', error);
+        });
+    }
+
+    function startMeeting(signature) {
+        client.init({
+            zoomAppRoot: meetingSDKElement,
+            language: 'en-US',
+            patchJsMedia: true
+        }).then(() => {
+            client.join({
+                signature: signature,
+                sdkKey: sdkKey,
+                meetingNumber: meetingNumber,
+                password: passWord,
+                userName: userName,
+                userEmail: userEmail,
+                tk: registrantToken,
+                zak: zakToken
+            }).then(() => {
+                console.log('Joined meeting successfully');
+            }).catch(error => {
+                console.error('Error joining meeting:', error);
+            });
+        }).catch(error => {
+            console.error('Error initializing Zoom SDK:', error);
+        });
+    }
+
+    // Topic management
     document.getElementById('addTopic').addEventListener('click', function() {
         var container = document.getElementById('topicInputs');
         var index = container.children.length;
@@ -64,21 +125,5 @@ document.addEventListener('DOMContentLoaded', function () {
         var minutes = Math.floor(seconds / 60);
         var remainingSeconds = seconds % 60;
         return (minutes < 10 ? '0' : '') + minutes + ":" + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
-    }
-
-    var zoomForm = document.getElementById('zoomForm');
-zoomForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    // Generate a unique meeting ID for the Palooka app
-    var meetingId = generateMeetingId();
-    // Redirect the user to the corrected Zoom authorization URL
-    window.location.href = 'https://zoom.us/oauth/authorize?client_id=FUo5DLRpR6SYlWvcWya6zA&response_type=code&redirect_uri=https%3A%2F%2Fkhobster.github.io%2Fpalooka%2Fcallback&state=' + meetingId;
-});
-
-
-    function generateMeetingId() {
-        // Generate a unique meeting ID for the Palooka app
-        // You can use any method to generate a unique ID, such as UUID
-        return 'PALOOKA_' + Math.random().toString(36).substr(2, 9);
     }
 });
