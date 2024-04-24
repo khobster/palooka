@@ -67,13 +67,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     var zoomForm = document.getElementById('zoomForm');
-    zoomForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Generate a unique meeting ID for the Palooka app
-        var meetingId = generateMeetingId();
-        // Redirect the user to the Zoom authorization URL
-        window.location.href = 'https://zoom.us/oauth/authorize?client_id=FUo5DLRpR6SYlWvcWya6zA&response_type=code&redirect_uri=https%3A%2F%2Fkhobster.github.io%2Fpalooka%2Foauth%2Fcallback' + CLIENT_ID + '&redirect_uri=https://khobster.github.io/palooka/oauth/callback&state=' + meetingId;
-    });
+zoomForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Generate a unique meeting ID for the Palooka app
+    var meetingId = generateMeetingId();
+    // Redirect the user to the corrected Zoom authorization URL
+    window.location.href = 'https://zoom.us/oauth/authorize?client_id=FUo5DLRpR6SYlWvcWya6zA&response_type=code&redirect_uri=https%3A%2F%2Fkhobster.github.io%2Fpalooka%2Fcallback&state=' + meetingId;
+});
+
 
     function generateMeetingId() {
         // Generate a unique meeting ID for the Palooka app
