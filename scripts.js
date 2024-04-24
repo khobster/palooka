@@ -69,31 +69,15 @@ document.addEventListener('DOMContentLoaded', function () {
     var zoomForm = document.getElementById('zoomForm');
     zoomForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        var meetingId = generateMeetingId(); // Generate a unique meeting ID for the Palooka app
-        var accessToken = generateAccessToken(); // Generate an access token for Zoom API
-
-        if (meetingId && accessToken) {
-            initializeZoom(meetingId, accessToken);
-        } else {
-            alert('Failed to generate meeting ID or access token.');
-        }
+        // Generate a unique meeting ID for the Palooka app
+        var meetingId = generateMeetingId();
+        // Redirect the user to the Zoom authorization URL
+        window.location.href = 'https://zoom.us/oauth/authorize?client_id=FUo5DLRpR6SYlWvcWya6zA&response_type=code&redirect_uri=https%3A%2F%2Fkhobster.github.io%2Fpalooka%2Foauth%2Fcallback' + CLIENT_ID + '&redirect_uri=https://khobster.github.io/palooka/oauth/callback&state=' + meetingId;
     });
-
-    function initializeZoom(meetingId, accessToken) {
-        // Use Zoom API to start a meeting using the provided meeting ID and access token
-        // Display Zoom meeting interface within the 'zoom-meeting' div
-    }
 
     function generateMeetingId() {
         // Generate a unique meeting ID for the Palooka app
         // You can use any method to generate a unique ID, such as UUID
         return 'PALOOKA_' + Math.random().toString(36).substr(2, 9);
-    }
-
-    function generateAccessToken() {
-        // Generate an access token for Zoom API
-        // You can implement your own method to generate the access token
-        // This token will be used to authenticate Zoom API requests
-        return 'LDrrd8BYQnKvEBnJ1gSQkg';
     }
 });
