@@ -64,49 +64,24 @@ document.addEventListener('DOMContentLoaded', function () {
         return (minutes < 10 ? '0' : '') + minutes + ":" + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
     }
 
-    function initializeJitsi(roomName) {
-        var domain = 'meet.jit.si';
-        var options = {
-            roomName: encodeURIComponent(roomName),
-            parentNode: document.getElementById('jitsi-meet'),
-            width: '100%',
-            height: '100%',
-            configOverwrite: {
-                requireDisplayName: false,
-                startWithAudioMuted: false,
-                prejoinPageEnabled: false
-            },
-            interfaceConfigOverwrite: {
-                filmStripOnly: false,
-                SHOW_JITSI_WATERMARK: false,
-            }
-        };
-
-        new JitsiMeetExternalAPI(domain, options);
-        document.getElementById('jitsi-meet').style.display = 'block';
-        document.getElementById('roomForm').style.display = 'none';
-        document.getElementById('shareSession').style.display = 'block';
-    }
-
-    var roomForm = document.getElementById('roomForm');
-    roomForm.addEventListener('submit', function(e) {
+    var zoomForm = document.getElementById('zoomForm');
+    zoomForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        var roomName = document.getElementById('roomName').value.trim();
-        if (roomName) {
-            initializeJitsi(roomName);
+        var apiKey = document.getElementById('apiKey').value.trim();
+        var apiSecret = document.getElementById('apiSecret').value.trim();
+        var meetingId = document.getElementById('meetingId').value.trim();
+        var accessToken = document.getElementById('accessToken').value.trim();
+
+        if (apiKey && apiSecret && meetingId && accessToken) {
+            initializeZoom(apiKey, apiSecret, meetingId, accessToken);
         } else {
-            alert('Please enter a room name.');
+            alert('Please fill in all Zoom API credentials.');
         }
     });
 
-    document.getElementById('shareSession').addEventListener('click', function() {
-        var roomName = document.getElementById('roomName').value.trim();
-        var shareURL = window.location.href.split('?')[0] + '?room=' + encodeURIComponent(roomName);
-        
-        navigator.clipboard.writeText(shareURL).then(function() {
-            alert('Link copied to clipboard! Share it with others to join your Palooka session.');
-        }).catch(function(err) {
-            alert('Failed to copy link: ', err);
-        });
-    });
+    function initializeZoom(apiKey, apiSecret, meetingId, accessToken) {
+        // Initialize Zoom meeting using provided credentials
+        // Use Zoom Web SDK functions to start the meeting
+        // Display Zoom meeting interface within the 'zoom-meeting' div
+    }
 });
