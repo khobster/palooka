@@ -14,10 +14,10 @@
 
         if (!code) {
             console.error('Authorization code not found in URL.');
-            // Handle error: Authorization code not found
+            document.body.innerHTML = '<p>Error: Authorization code not found.</p>';
         } else {
             // Send authorization code to your Lambda function for token exchange
-            const lambdaEndpoint = 'https://your-api-gateway-endpoint';
+            const lambdaEndpoint = 'https://lod0yhxrw3.execute-api.us-east-2.amazonaws.com/dev';
             fetch(lambdaEndpoint, {
                 method: 'POST',
                 headers: {
@@ -29,11 +29,12 @@
             .then(data => {
                 // Handle the server's response
                 console.log('Token exchange response:', data);
-                // Store the tokens securely, update UI, etc.
+                document.body.innerHTML = '<p>Token received successfully. You can now use it to make API calls to Zoom.</p>';
+                // Optionally, store the tokens securely or redirect the user
             })
             .catch(error => {
                 console.error('Error exchanging authorization code:', error);
-                // Handle error: Failed to exchange authorization code
+                document.body.innerHTML = '<p>Error during token exchange.</p>';
             });
         }
     </script>
