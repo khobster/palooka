@@ -56,13 +56,11 @@
 
 #timerDisplay {
     font-family: 'Anton', sans-serif;
-    font-size: 48px; /* Larger font size for the timer display */
+    font-size: 48px;
     text-align: center;
 }
 
 #shareSession {
-    display: none; /* Button is hidden initially */
+    display: none;
     margin-top: 20px;
 }
-
-/* Add your custom CSS styles here */
