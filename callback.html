@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Callback</title>
+</head>
+<body>
+    <h1>OAuth Callback</h1>
+    <script>
+        // Extract authorization code from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        if (!code) {
+            console.error('Authorization code not found in URL.');
+            // Handle error: Authorization code not found
+        } else {
+            // Send authorization code to your server for token exchange
+            const tokenExchangeEndpoint = 'https://your-server.com/token-exchange';
+            fetch(tokenExchangeEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ code: code }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the server's response
+                console.log('Token exchange response:', data);
+                // For example, store tokens, redirect user, etc.
+            })
+            .catch(error => {
+                console.error('Error exchanging authorization code:', error);
+                // Handle error: Failed to exchange authorization code
+            });
+        }
+    </script>
+</body>
+</html>
