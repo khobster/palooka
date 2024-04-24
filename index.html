@@ -5,36 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Palooka</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Include Zoom Web SDK -->
-    <script type="text/javascript" src="https://source.zoom.us/zoom-meeting-3.6.0.min.js"></script>
+    <!-- Zoom Web SDK Libraries -->
+    <script src="https://source.zoom.us/zoom-meeting-3.6.0.min.js"></script>
+    <!-- Add other dependencies as needed -->
 </head>
 <body>
     <div class="container">
         <div id="video-meeting">
-            <!-- Placeholder for Zoom SDK meeting -->
-            <div id="zmmtg-root"></div>
-            <button id="startZoomMeeting">Start Zoom Meeting</button>
+            <!-- Zoom Meeting SDK Component View will be rendered here -->
+            <div id="meetingSDKElement"></div>
+            <!-- Button to Join Zoom Meeting -->
+            <button id="startZoomMeeting" onClick="getSignature()">Start Zoom Meeting</button>
         </div>
         <div id="palooka-app">
+            <!-- Palooka App's Timer and Topics will go here -->
             <div id="timerDisplay">00:00</div>
-            <form id="topicsForm">
-                <div id="topicInputs">
-                    <!-- Topic inputs will be dynamically added here -->
-                </div>
-                <button id="addTopic" type="button">Add Topic</button>
-                <button type="submit">Start Talking</button>
-            </form>
-            <button id="shareSession" type="button">Invite Others</button>
+            <!-- Add the rest of your Palooka app's HTML structure here -->
         </div>
     </div>
+    
+    <!-- Palooka App Scripts -->
     <script src="scripts.js"></script>
-    <!-- Zoom Web SDK Magic Happens Here -->
-    <script>
-        // Assume the necessary Zoom SDK initialization and meeting joining functions are here
-        // Example placeholder for SDK functionality
-        document.getElementById('startZoomMeeting').addEventListener('click', function() {
-            // Initialize Zoom SDK and Join Meeting Code Goes Here...
-        });
+    
+    <!-- Zoom Web SDK Initialization Script -->
+    <script type="text/javascript">
+        // Your Zoom SDK code goes here
+        
+        const client = ZoomMtgEmbedded.createClient();
+        let meetingSDKElement = document.getElementById('meetingSDKElement');
+        
+        // Other variables like authEndpoint, sdkKey, etc. will be initialized here
+        // And your functions like getSignature and startMeeting
+        
+        // Remember to secure your credentials and tokens
     </script>
 </body>
 </html>
