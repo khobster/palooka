@@ -3,43 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>palooka</title>
+    <title>Palooka</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Include Zoom Web SDK -->
-    <script type="text/javascript" src="https://source.zoom.us/1.9.1/lib/vendor/react.min.js"></script>
-    <script type="text/javascript" src="https://source.zoom.us/1.9.1/lib/vendor/react-dom.min.js"></script>
-    <script type="text/javascript" src="https://source.zoom.us/1.9.1/lib/vendor/redux.min.js"></script>
-    <script type="text/javascript" src="https://source.zoom.us/1.9.1/lib/vendor/redux-thunk.min.js"></script>
-    <script type="text/javascript" src="https://source.zoom.us/1.9.1/lib/vendor/lodash.min.js"></script>
     <script type="text/javascript" src="https://source.zoom.us/zoom-meeting-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container">
         <div id="video-meeting">
-            <form id="zoomForm">
-                <input type="text" id="apiKey" placeholder="Zoom API Key" required>
-                <input type="text" id="apiSecret" placeholder="Zoom API Secret" required>
-                <input type="text" id="meetingId" placeholder="Meeting ID" required>
-                <input type="text" id="accessToken" placeholder="Access Token" required>
-                <button type="submit">Start Zoom Meeting</button>
-            </form>
-            <div id="zoom-meeting" style="height: 90%; width: 100%; display: none;"></div>
-            <button id="shareSession" type="button" style="display: none;">Share Palooka Session</button>
+            <!-- Placeholder for Zoom SDK meeting -->
+            <div id="zmmtg-root"></div>
+            <button id="startZoomMeeting">Start Zoom Meeting</button>
         </div>
         <div id="palooka-app">
             <div id="timerDisplay">00:00</div>
             <form id="topicsForm">
                 <div id="topicInputs">
-                    <div class="topicInput" data-topic-index="0">
-                        <input name="topicTitle[]" required type="text" placeholder="Topic Title" />
-                        <input max="240" min="1" name="topicDuration[]" required type="number" placeholder="🕒" />
-                    </div>
+                    <!-- Topic inputs will be dynamically added here -->
                 </div>
                 <button id="addTopic" type="button">Add Topic</button>
                 <button type="submit">Start Talking</button>
             </form>
+            <button id="shareSession" type="button">Invite Others</button>
         </div>
     </div>
     <script src="scripts.js"></script>
+    <!-- Zoom Web SDK Magic Happens Here -->
+    <script>
+        // Assume the necessary Zoom SDK initialization and meeting joining functions are here
+        // Example placeholder for SDK functionality
+        document.getElementById('startZoomMeeting').addEventListener('click', function() {
+            // Initialize Zoom SDK and Join Meeting Code Goes Here...
+        });
+    </script>
 </body>
 </html>
