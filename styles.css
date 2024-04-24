@@ -26,11 +26,11 @@
     font-family: 'Anton', sans-serif;
     font-size: 30px;
     margin-bottom: 10px;
-    display: block; /* Ensure the elements are in block format */
 }
 
 .topicInput input[type="text"],
 .topicInput input[type="number"] {
+    width: 300px;
     color: white;
     background: transparent;
     border: 1px solid white;
@@ -39,27 +39,19 @@
     padding: 5px;
 }
 
-.topicInput input[name="topicDuration[]"], 
-.topicInput input[type="text"] { /* Corrected selector */
-    width: 300px; /* Set a fixed width for inputs */
-}
-
-.activeTopic, .activeTopic input {
+.activeTopic {
     background-color: yellow;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; /* Black stroke outline */
-    color: black; /* Text color changed to black for visibility */
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    text-align: center;
 }
 
 #addTopic {
     margin-right: 5px;
 }
 
-.topic-list li {
-    background-color: #f0f0f0;
-    margin-bottom: 5px;
-    padding: 10px;
-    border-radius: 5px;
-    font-family: 'Anton', sans-serif;
-    font-size: 30px;
-    /* Add any other styles that you had previously applied to topic items */
+#timerDisplay[data-time]::after {
+    content: attr(data-time);
+    display: block;
+    font-size: 0.8em;
 }
