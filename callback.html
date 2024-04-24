@@ -8,35 +8,36 @@
 <body>
     <h1>OAuth Callback</h1>
     <script>
-        // Extract authorization code from URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
 
-        if (!code) {
-            console.error('Authorization code not found in URL.');
-            document.body.innerHTML = '<p>Error: Authorization code not found.</p>';
-        } else {
-            // Send authorization code to your Lambda function for token exchange
-            const lambdaEndpoint = 'https://pggibbhorojif6jzsokz32dqlq0kmlmk.lambda-url.us-east-2.on.aws/';
-            fetch(lambdaEndpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ code: code }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the server's response
-                console.log('Token exchange response:', data);
-                document.body.innerHTML = '<p>Token received successfully. You can now use it to make API calls to Zoom.</p>';
-                // Optionally, store the tokens securely or redirect the user
-            })
-            .catch(error => {
-                console.error('Error exchanging authorization code:', error);
-                document.body.innerHTML = '<p>Error during token exchange.</p>';
-            });
-        }
-    </script>
+    if (!code) {
+        console.error('Authorization code not found in URL.');
+        document.body.innerHTML = '<p>Error: Authorization code not found.</p>';
+    } else {
+        const lambdaEndpoint = 'https://pggibbhorojif6jzsokz32dqlq0kmlmk.lambda-url.us-east-2.on.aws/';
+        fetch(lambdaEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ code: code }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Token exchange response:', data);
+            document.body.innerHTML = '<p>Token received successfully. You can now use it to make API calls to Zoom.</p>';
+        })
+        .catch(error => {
+            console.error('Error exchanging authorization code:', error);
+            document.body.innerHTML = '<p>Error during token exchange. Please try again.</p>';
+        });
+    }
+</script>
 </body>
 </html>
