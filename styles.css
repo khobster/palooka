@@ -1,68 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-.container {
-    display: flex;
-    height: 100vh;
-}
-
-#video-meeting {
-    flex: 1;
-    height: 100%;
-}
-
-#palooka-app {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-#topicsForm, #roomForm {
+#topicsForm {
     margin-bottom: 20px;
 }
 
 .topicInput {
-    background-color: red;
-    padding: 5px;
-    font-family: 'Anton', sans-serif;
-    font-size: 30px;
-    margin-bottom: 10px;
-    border: 1px solid transparent; /* Make the border transparent for consistent sizing */
-    box-sizing: border-box; /* Include padding and border in the element's width */
+    background-color: red;   /* Red background for the topic input container */
+    color: white;            /* White text color */
+    padding: 5px;            /* Padding inside the container */
+    font-family: 'Anton', sans-serif; /* Font family for the text */
+    font-size: 30px;         /* Font size */
+    margin-bottom: 10px;     /* Margin at the bottom of each topic input container */
+    display: block;          /* Each topic input container will take the full width of its parent */
 }
 
-.topicInput input[type="text"],
-.topicInput input[type="number"] {
-    width: calc(100% - 10px); /* Adjust width to account for padding */
-    color: white;
-    background: transparent;
-    border: 1px solid white;
-    font-family: 'Anton', sans-serif;
-    font-size: 30px;
-    padding: 5px;
-    box-sizing: border-box; /* Include padding and border in the input's width */
+.topicInput input {
+    color: white;             /* White text color for input fields */
+    background: transparent;  /* Transparent background for input fields */
+    font-family: 'Anton', sans-serif; /* Font family for input fields */
+    font-size: 30px;          /* Font size for input fields */
+    padding: 5px;             /* Padding inside input fields */
+    border: 1px solid white;  /* Border for input fields */
 }
 
-.activeTopic {
-    background-color: yellow;
-    font-family: 'Anton', sans-serif;
-    font-size: 30px;
-    text-align: center;
-    border: 1px solid yellow; /* Add the border to maintain size */
-    -webkit-text-stroke: 1px black; /* Black stroke outline for Webkit browsers */
-    text-shadow:
-        -1px -1px 0 #000,
-         1px -1px 0 #000,
-        -1px 1px 0 #000,
-         1px 1px 0 #000; /* Simulated text stroke for better browser compatibility */
+.topicInput input[name="topicDuration[]"] {
+    width: 60px; /* Width for duration input fields */
 }
 
+.activeTopic, .activeTopic input {
+    background-color: yellow; /* Yellow background for active topics */
+    color: black;             /* Black text color for active topics */
+}
 
 #addTopic {
-    margin-right: 5px;
-}
-
-#timerDisplay[data-time]::after {
-    content: attr(data-time);
-    display: block;
-    font-size: 0.8em;
+    margin-right: 5px; /* Margin to the right of the 'Add Topic' button */
 }
