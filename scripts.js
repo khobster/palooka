@@ -6,11 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function addTopicInput() {
         var container = document.getElementById('topicInputs');
         var index = container.children.length;
-        var inputHTML = `
-            <div class="topicInput" data-topic-index="${index}">
-                <input type="text" name="topicTitle[]" placeholder="Topic Title" required />
-                <input type="number" name="topicDuration[]" placeholder="🕒" min="1" max="240" required />
-            </div>`;
+        var inputHTML = `<div class="topicInput" data-topic-index="${index}">
+                             <input type="text" name="topicTitle[]" placeholder="Topic Title" required />
+                             <input type="number" name="topicDuration[]" placeholder="🕒" min="1" max="240" required />
+                         </div>`;
         container.insertAdjacentHTML('beforeend', inputHTML);
     }
 
@@ -21,14 +20,12 @@ document.addEventListener('DOMContentLoaded', function () {
         var topicTitles = document.querySelectorAll('input[name="topicTitle[]"]');
         var topicDurations = document.querySelectorAll('input[name="topicDuration[]"]');
 
-        topicDurations.forEach(function(input) {
-            input.style.display = 'none';
-        });
-
         topics = [];
         topicTitles.forEach(function (titleInput, index) {
-            var duration = parseInt(topicDurations[index].value, 10) * 60;
+            var durationInput = topicDurations[index];
+            var duration = parseInt(durationInput.value, 10) * 60; // seconds
             topics.push({ title: titleInput.value, duration: duration });
+            durationInput.style.display = 'none'; // Hide duration inputs
         });
 
         currentTopicIndex = 0;
@@ -36,39 +33,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function startNextTopic() {
-        var previousActive = document.querySelector('.topicInput.activeTopic');
-        if (previousActive) {
-            previousActive.classList.remove('activeTopic');
-        }
-
         if (currentTopicIndex < topics.length) {
             var currentTopic = topics[currentTopicIndex];
             var timeLeft = currentTopic.duration;
-
-            var currentInputBox = document.querySelector(`.topicInput[data-topic-index="${currentTopicIndex}"]`);
-            if (currentInputBox) {
-                currentInputBox.classList.add('activeTopic');
-            }
-
-            var timerInterval = setInterval(function() {
-                var minutes = Math.floor(timeLeft / 60);
-                var seconds = timeLeft % 60;
-
-                var timeString = minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
-                document.getElementById('timerDisplay').textContent = timeString;
-
+            var timerInterval = setInterval(function () {
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     bellSound.play();
-                    currentInputBox.classList.remove('activeTopic');
                     currentTopicIndex++;
-                    startNextTopic();
+                    if (currentTopicIndex < topics.length) {
+                        startNextTopic();
+                    } else {
+                        document.getElementById('timerDisplay').textContent = "Meeting Over";
+                    }
                 } else {
                     timeLeft--;
+                    document.getElementById('timerDisplay').textContent = formatTime(timeLeft);
                 }
             }, 1000);
-        } else {
-            document.getElementById('timerDisplay').textContent = "Meeting Over";
         }
+    }
+
+    function formatTime(seconds) {
+        var minutes = Math.floor(seconds / 60);
+        var remainingSeconds = seconds % 60;
+        return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 });
