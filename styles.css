@@ -1,37 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-#topicsForm {
-    margin-bottom: 20px;
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0; /* Light grey background */
+}
+
+#palooka-app {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background-color: #ffffff; /* White background for the app */
 }
 
 .topicInput {
-    background-color: red;   /* Red background for the topic input container */
-    color: white;            /* White text color */
-    padding: 5px;            /* Padding inside the container */
-    font-family: 'Anton', sans-serif; /* Font family for the text */
-    font-size: 30px;         /* Font size */
-    margin-bottom: 10px;     /* Margin at the bottom of each topic input container */
-    display: block;          /* Each topic input container will take the full width of its parent */
+    margin-bottom: 10px;
 }
 
-.topicInput input {
-    color: white;             /* White text color for input fields */
-    background: transparent;  /* Transparent background for input fields */
-    font-family: 'Anton', sans-serif; /* Font family for input fields */
-    font-size: 30px;          /* Font size for input fields */
-    padding: 5px;             /* Padding inside input fields */
-    border: 1px solid white;  /* Border for input fields */
+.topicInput input[type="text"],
+.topicInput input[type="number"] {
+    width: 200px;
+    padding: 8px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-.topicInput input[name="topicDuration[]"] {
-    width: 60px; /* Width for duration input fields */
+#timerDisplay {
+    font-size: 2rem;
+    font-family: 'Anton', sans-serif;
+    margin-bottom: 20px;
 }
 
-.activeTopic, .activeTopic input {
-    background-color: yellow; /* Yellow background for active topics */
-    color: black;             /* Black text color for active topics */
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #4285F4; /* Google's brand color blue */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: 'Anton', sans-serif;
 }
 
-#addTopic {
-    margin-right: 5px; /* Margin to the right of the 'Add Topic' button */
+button:hover {
+    background-color: #357ae8; /* Darker blue on hover */
 }
