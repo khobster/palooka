@@ -14,10 +14,13 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     background-color: #ffffff; /* White background for the app */
+    width: fit-content; /* Make the app container only as wide as its content */
+    margin: auto; /* Center the app container horizontally */
 }
 
 .topicInput {
     margin-bottom: 10px;
+    position: relative; /* Needed for positioning the pseudo-element */
 }
 
 .topicInput input[type="text"],
@@ -27,11 +30,29 @@
     margin-right: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-family: 'Anton', sans-serif;
+    box-sizing: border-box; /* Include padding and border in the input's width */
+    z-index: 1; /* Position the input above the pseudo-element */
 }
 
-.activeTopic {
-    border: 2px solid #4285F4; /* Highlight with a blue border */
-    background-color: #e0f7fa; /* Light blue background for better visibility */
+/* Highlight the active topic with a red background pseudo-element */
+.topicInput.activeTopic::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: red; /* Red background for the active topic */
+    z-index: 0; /* Ensure the highlight is below the input text */
+    border-radius: 4px; /* Match the border-radius of the input */
+    margin: -1px; /* Slightly larger to be visible around the edges */
+}
+
+/* Style the input field within an active topic */
+.activeTopic input[type="text"],
+.activeTopic input[type="number"] {
+    border-color: red; /* Red border for active input fields */
 }
 
 #timerDisplay {
