@@ -1,90 +1,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body, html {
-    height: 100%;
-    font-family: 'Anton', sans-serif;
-}
-
 .container {
     display: flex;
-    flex-direction: row;
     height: 100vh;
 }
 
-#video-meeting, #palooka-app {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Style adjustments for the video and topics sections */
 #video-meeting {
-    background-color: #fff; /* Replace with the actual background color of your video element */
-    justify-content: flex-start;
+    flex: 1;
+    height: 100%;
 }
 
 #palooka-app {
-    background-color: #333; /* Adjust to match the background color of your topics board */
-    color: #fff;
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
 }
 
-/* Update topic board styles */
-#topicsForm {
-    margin-top: 20px;
+#topicsForm, #roomForm {
+    margin-bottom: 20px;
 }
 
 .topicInput {
-    background-color: red; /* Adjust color to match the image */
-    color: white;
-    padding: 10px;
+    background-color: green;
+    padding: 5px;
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
     margin-bottom: 10px;
 }
 
 .topicInput input[type="text"],
 .topicInput input[type="number"] {
+    width: 300px;
     color: white;
     background: transparent;
-    border: none;
-    border-bottom: 2px solid white; /* Gives an underline effect */
-    margin-bottom: 5px;
-}
-
-.topicInput input[name="topicDuration[]"] {
-    width: 100px;
+    border: 1px solid white;
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    padding: 5px;
 }
 
 .activeTopic {
-    background-color: yellow; /* This color indicates the current active topic */
-    color: black;
-}
-
-#addTopic, button[type="submit"] {
-    background-color: #f00; /* Adjust button color to match the image */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 10px 0;
-    cursor: pointer;
-}
-
-#addTopic:hover, button[type="submit"]:hover {
-    background-color: #c00; /* Darker shade on hover */
-}
-
-#timerDisplay {
-    font-size: 48px;
+    background-color: yellow;
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
     text-align: center;
-    background: #000; /* Adjust to match the timer background in the image */
-    color: #fff;
-    padding: 20px;
-    width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+}
+
+#addTopic {
+    margin-right: 5px;
+}
+
+#timerDisplay[data-time]::after {
+    content: attr(data-time);
+    display: block;
+    font-size: 0.8em;
 }
