@@ -3,31 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palooka</title>
+    <title>palooka</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Zoom Web SDK Libraries -->
-    <script src="https://source.zoom.us/zoom-meeting-3.6.0.min.js"></script>
+    <script src="https://meet.jit.si/external_api.js"></script> <!-- Jitsi Meet API -->
 </head>
 <body>
     <div class="container">
         <div id="video-meeting">
-            <!-- Zoom Meeting SDK Component View will be rendered here -->
-            <div id="meetingSDKElement"></div>
-            <form id="zoomMeetingForm">
-                <input type="text" id="meetingNumber" placeholder="Enter Meeting Number" required>
-                <input type="password" id="meetingPassword" placeholder="Enter Meeting Password">
-                <input type="text" id="userName" placeholder="Enter Your Name" required>
-                <input type="email" id="userEmail" placeholder="Enter Your Email">
-                <button type="button" onclick="getSignature()">Join Meeting</button>
+            <!-- Form for entering room name -->
+            <form id="roomForm">
+                <input type="text" id="roomName" placeholder="Enter a room name" required>
+                <button type="submit">Join/Create Room</button>
             </form>
+            <!-- Jitsi Meet iframe, initially hidden -->
+            <div id="jitsi-meet" style="height: 90%; width: 100%; display: none;"></div>
+            <!-- Share session link button, initially hidden -->
+            <button id="shareSession" type="button" style="display: none;">Share Palooka Session</button>
         </div>
         <div id="palooka-app">
-            <!-- Additional features of your Palooka app go here -->
             <div id="timerDisplay">00:00</div>
-            <!-- Include any other elements of your Palooka app as needed -->
+            <form id="topicsForm">
+                <div id="topicInputs">
+                    <!-- Topic inputs will be dynamically added here -->
+                </div>
+                <button id="addTopic" type="button">Add Topic</button>
+                <button type="submit">Start Talking</button>
+            </form>
+            <ol id="topicList" class="topic-list">
+                <!-- Topics will be displayed here -->
+            </ol>
         </div>
     </div>
-
     <script src="scripts.js"></script>
 </body>
 </html>
