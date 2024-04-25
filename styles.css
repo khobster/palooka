@@ -26,17 +26,20 @@
     font-family: 'Anton', sans-serif;
     font-size: 30px;
     margin-bottom: 10px;
+    border: 1px solid transparent; /* Make the border transparent for consistent sizing */
+    box-sizing: border-box; /* Include padding and border in the element's width */
 }
 
 .topicInput input[type="text"],
 .topicInput input[type="number"] {
-    width: 300px;
+    width: calc(100% - 10px); /* Adjust width to account for padding */
     color: white;
     background: transparent;
     border: 1px solid white;
     font-family: 'Anton', sans-serif;
     font-size: 30px;
     padding: 5px;
+    box-sizing: border-box; /* Include padding and border in the input's width */
 }
 
 .activeTopic {
@@ -44,6 +47,7 @@
     font-family: 'Anton', sans-serif;
     font-size: 30px;
     text-align: center;
+    border: 1px solid yellow; /* Add the border to maintain size */
 }
 
 #addTopic {
