@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
         topics = [];
         topicTitles.forEach(function (titleInput, index) {
             var durationInput = topicDurations[index];
-            var duration = parseInt(durationInput.value, 10) * 60; // seconds
+            var duration = parseInt(durationInput.value, 10) * 60; // Convert minutes to seconds
             topics.push({ title: titleInput.value, duration: duration });
-            durationInput.style.display = 'none'; // Hide duration inputs
+            durationInput.style.display = 'none'; // Optionally hide duration inputs
         });
 
         currentTopicIndex = 0;
@@ -33,9 +33,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function startNextTopic() {
+        var previousActive = document.querySelector('.activeTopic');
+        if (previousActive) {
+            previousActive.classList.remove('activeTopic');
+        }
+
         if (currentTopicIndex < topics.length) {
             var currentTopic = topics[currentTopicIndex];
             var timeLeft = currentTopic.duration;
+
+            // Highlight the current topic
+            var topicInputs = document.querySelectorAll('.topicInput');
+            var currentInputBox = topicInputs[currentTopicIndex];
+            currentInputBox.classList.add('activeTopic');
+
             var timerInterval = setInterval(function () {
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
@@ -51,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('timerDisplay').textContent = formatTime(timeLeft);
                 }
             }, 1000);
+        } else {
+            document.getElementById('timerDisplay').textContent = "Meeting Over"; // Display when the meeting is over
         }
     }
 
