@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var topics = [];
     var currentTopicIndex = 0;
     var bellSound = new Audio('https://www.vanillafrosting.agency/wp-content/uploads/2023/11/bell.mp3');
+    var addTopicButton = document.getElementById('addTopic');
+    var startTalkingButton = document.querySelector('button[type="submit"]');
 
     function addTopicInput() {
         var container = document.getElementById('topicInputs');
@@ -13,10 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
         container.insertAdjacentHTML('beforeend', inputHTML);
     }
 
-    document.getElementById('addTopic').addEventListener('click', addTopicInput);
+    addTopicButton.addEventListener('click', addTopicInput);
 
     document.getElementById('topicsForm').addEventListener('submit', function (e) {
         e.preventDefault();
+
         var topicTitles = document.querySelectorAll('input[name="topicTitle[]"]');
         var topicDurations = document.querySelectorAll('input[name="topicDuration[]"]');
 
@@ -25,8 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
             var durationInput = topicDurations[index];
             var duration = parseInt(durationInput.value, 10) * 60; // Convert minutes to seconds
             topics.push({ title: titleInput.value, duration: duration });
-            durationInput.style.display = 'none'; // Optionally hide duration inputs
         });
+
+        // Hide the "Add Topic" and "Start Talking" buttons
+        addTopicButton.style.display = 'none';
+        startTalkingButton.style.display = 'none';
 
         currentTopicIndex = 0;
         startNextTopic();
@@ -51,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     bellSound.play();
+                    currentInputBox.classList.remove('activeTopic');
                     currentTopicIndex++;
                     if (currentTopicIndex < topics.length) {
                         startNextTopic();
@@ -63,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }, 1000);
         } else {
-            document.getElementById('timerDisplay').textContent = "Meeting Over"; // Display when the meeting is over
+            document.getElementById('timerDisplay').textContent = "Meeting Over"; // Display when all topics are covered
         }
     }
 
