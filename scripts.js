@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var currentTopicIndex = 0;
     var bellSound = new Audio('https://www.vanillafrosting.agency/wp-content/uploads/2023/11/bell.mp3');
     var addTopicButton = document.getElementById('addTopic');
-    var startTalkingButton = document.querySelector('button[type="submit"]');
+    var startTalkingButton = document.querySelector('button[type="submit"]'); // Assuming there's only one submit button
 
     function addTopicInput() {
         var container = document.getElementById('topicInputs');
@@ -28,11 +28,12 @@ document.addEventListener('DOMContentLoaded', function () {
             var durationInput = topicDurations[index];
             var duration = parseInt(durationInput.value, 10) * 60; // Convert minutes to seconds
             topics.push({ title: titleInput.value, duration: duration });
+            titleInput.style.display = 'none'; // Hide title input
+            durationInput.style.display = 'none'; // Hide duration input
         });
 
-        // Hide the "Add Topic" and "Start Talking" buttons
-        addTopicButton.style.display = 'none';
-        startTalkingButton.style.display = 'none';
+        addTopicButton.style.display = 'none'; // Hide "Add Topic" button
+        startTalkingButton.style.display = 'none'; // Hide "Start Talking" button
 
         currentTopicIndex = 0;
         startNextTopic();
