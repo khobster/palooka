@@ -2,38 +2,35 @@ document.addEventListener('DOMContentLoaded', function () {
     var topics = [];
     var currentTopicIndex = 0;
     var bellSound = new Audio('https://www.vanillafrosting.agency/wp-content/uploads/2023/11/bell.mp3');
-    var addTopicButton = document.getElementById('addTopic');
-    var startTalkingButton = document.querySelector('button[type="submit"]'); // Assuming there's only one submit button
 
     function addTopicInput() {
         var container = document.getElementById('topicInputs');
         var index = container.children.length;
         var inputHTML = `<div class="topicInput" data-topic-index="${index}">
-                             <input type="text" name="topicTitle[]" placeholder="Topic Title" required />
-                             <input type="number" name="topicDuration[]" placeholder="🕒" min="1" max="240" required />
+                             <input type="text" class="topicTitle" name="topicTitle[]" placeholder="Topic Title" required />
+                             <input type="number" class="topicDuration" name="topicDuration[]" placeholder="🕒" min="1" max="240" required />
                          </div>`;
         container.insertAdjacentHTML('beforeend', inputHTML);
     }
 
-    addTopicButton.addEventListener('click', addTopicInput);
+    document.getElementById('addTopic').addEventListener('click', addTopicInput);
 
     document.getElementById('topicsForm').addEventListener('submit', function (e) {
         e.preventDefault();
-
-        var topicTitles = document.querySelectorAll('input[name="topicTitle[]"]');
-        var topicDurations = document.querySelectorAll('input[name="topicDuration[]"]');
+        var topicTitles = document.querySelectorAll('.topicTitle');
+        var topicDurations = document.querySelectorAll('.topicDuration');
 
         topics = [];
         topicTitles.forEach(function (titleInput, index) {
             var durationInput = topicDurations[index];
             var duration = parseInt(durationInput.value, 10) * 60; // Convert minutes to seconds
             topics.push({ title: titleInput.value, duration: duration });
-            titleInput.style.display = 'none'; // Hide title input
-            durationInput.style.display = 'none'; // Hide duration input
+            durationInput.style.display = 'none'; // Hide only the duration inputs
         });
 
-        addTopicButton.style.display = 'none'; // Hide "Add Topic" button
-        startTalkingButton.style.display = 'none'; // Hide "Start Talking" button
+        // Hide the "Add Topic" button and the form submit button
+        document.getElementById('addTopic').style.display = 'none';
+        this.querySelector('button[type="submit"]').style.display = 'none';
 
         currentTopicIndex = 0;
         startNextTopic();
@@ -42,7 +39,13 @@ document.addEventListener('DOMContentLoaded', function () {
     function startNextTopic() {
         var previousActive = document.querySelector('.activeTopic');
         if (previousActive) {
+            // Remove active styling and show the title input as a plain text
             previousActive.classList.remove('activeTopic');
+            var titleInput = previousActive.querySelector('.topicTitle');
+            titleInput.disabled = true; // Disable the input to make it read-only
+            titleInput.style.border = 'none'; // Remove border to look like plain text
+            titleInput.style.backgroundColor = 'transparent'; // Remove background
+            titleInput.style.color = 'black'; // Set text color to default or any color you want
         }
 
         if (currentTopicIndex < topics.length) {
@@ -58,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     bellSound.play();
-                    currentInputBox.classList.remove('activeTopic');
                     currentTopicIndex++;
                     if (currentTopicIndex < topics.length) {
                         startNextTopic();
@@ -71,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }, 1000);
         } else {
-            document.getElementById('timerDisplay').textContent = "Meeting Over"; // Display when all topics are covered
+            document.getElementById('timerDisplay').textContent = "Meeting Over";
         }
     }
 
